@@ -1,19 +1,19 @@
-package com.cervantes.poketinder.util
+package com.cervantes.poketinder.data
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.util.Log
-import com.cervantes.poketinder.data.User
+import com.cervantes.poketinder.data.model.User
 import com.google.gson.Gson
 
 class SharedPreferenceUtil {
     companion object {
-
         private const val SHARED_PREFERENCE_KEY = "SHARED_PREFERENCE_KEY"
+
         private lateinit var sharedPreference: SharedPreferences
+
         private const val USER = "USER"
+
         private const val INTRO = "INTRO"
 
     }
@@ -25,6 +25,7 @@ class SharedPreferenceUtil {
 
     fun saveFacebookUser(user: User){
         val gson = Gson()
+
         val jsonFacebookUser = gson.toJson(user)
 
         sharedPreference
@@ -41,7 +42,6 @@ class SharedPreferenceUtil {
         } catch (e: Exception){
             Log.d( "Codercool", e.message.toString())
         }
-
         return userFacebook
     }
 

@@ -1,4 +1,4 @@
-package com.cervantes.poketinder.activity
+package com.cervantes.poketinder.ui.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,10 +10,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.viewpager2.widget.ViewPager2
 import com.cervantes.poketinder.R
-import com.cervantes.poketinder.adapter.OnboardingAdapter
 import com.cervantes.poketinder.databinding.ActivityOnboardingBinding
 import com.cervantes.poketinder.util.Mock
-import com.cervantes.poketinder.util.SharedPreferenceUtil
+import com.cervantes.poketinder.data.SharedPreferenceUtil
+import com.cervantes.poketinder.ui.adapter.OnboardingAdapter
 
 class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(ActivityOnboardingBinding::inflate) {
 
@@ -21,7 +21,7 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(ActivityOnboa
 
     private lateinit var sharedPreferenceUtil: SharedPreferenceUtil
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         binding.vpOnboarding.adapter = adapter
 
@@ -31,7 +31,7 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(ActivityOnboa
         setupIndicator()
         setCurrentIndicator(0)
 
-        binding.vpOnboarding.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+        binding.vpOnboarding.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
             override fun onPageSelected(position: Int){
                 super.onPageSelected(position)
                 setCurrentIndicator(position)
@@ -39,7 +39,7 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(ActivityOnboa
             }
         })
 
-        binding.layBackButton.setOnClickListener{
+        binding.layBackButton.setOnClickListener {
             sharedPreferenceUtil.saveIntroShow()
             startActivity(Intent(this, RegisterActivity::class.java))
         }
@@ -47,12 +47,12 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(ActivityOnboa
 
     private fun setupIndicator(){
         val indicator = arrayOfNulls<ImageView>(adapter.itemCount)
-        val layoutParams: LinearLayout.LayoutParams =
+        val layoutParams: LinearLayout.LayoutParams=
             LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         layoutParams.setMargins(8,0,8,0)
         for(i in indicator.indices){
-            indicator[i] = ImageView(applicationContext)
-            indicator[i].apply{
+            indicator[i]=ImageView(applicationContext)
+            indicator[i].apply {
                 this?.setImageDrawable(
                     ContextCompat.getDrawable(
                         applicationContext,
@@ -65,8 +65,8 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(ActivityOnboa
         }
     }
 
-    private fun validateShowButton(itemCount: Int){
-        if(itemCount == 2){
+    private fun validateShowButton(itemCount:Int){
+        if (itemCount == 2){
             binding.layBackButton.visibility = View.VISIBLE
         }
     }
@@ -74,13 +74,13 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(ActivityOnboa
     private fun setCurrentIndicator(position: Int){
         val childCount = binding.dots.childCount
 
-        for (i in 0 until childCount){
+        for(i in 0 until childCount){
             val imageView = binding.dots[i] as ImageView
-            if (i == position){
+            if(i==position){
                 imageView.setImageDrawable(
                     ContextCompat.getDrawable(this, R.drawable.pokebolaazul)
                 )
-            }else{
+            } else {
                 imageView.setImageDrawable(
                     ContextCompat.getDrawable(this, R.drawable.pokebolagris)
                 )

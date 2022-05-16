@@ -1,4 +1,4 @@
-package com.cervantes.poketinder.data
+package com.cervantes.poketinder.data.model
 
 data class Onboarding(
     val id: Int,

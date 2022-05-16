@@ -1,36 +1,35 @@
-package com.cervantes.poketinder.adapter
+package com.cervantes.poketinder.ui.adapter
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cervantes.poketinder.R
-import com.cervantes.poketinder.data.Onboarding
+import com.cervantes.poketinder.data.model.Onboarding
 import com.cervantes.poketinder.databinding.ItemOnboardingBinding
 import com.cervantes.poketinder.util.inflate
 
-class OnboardingAdapter(val list: List<Onboarding>):
-    RecyclerView.Adapter<OnboardingAdapter.OnboardingHolder>() {
+class OnboardingAdapter(val list: List<Onboarding>) :
+    RecyclerView.Adapter<OnboardingAdapter.OnboardingHolder>(){
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OnboardingHolder {
         val view = parent.inflate(R.layout.item_onboarding)
         return OnboardingHolder(view)
     }
 
-    override fun onBindViewHolder(holder: OnboardingHolder, position: Int) {
+    override fun onBindViewHolder(holder: OnboardingHolder, position: Int){
         val item = list[position]
         holder.bind(item)
     }
 
     override fun getItemCount(): Int = list.size
 
-    class OnboardingHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class OnboardingHolder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ItemOnboardingBinding.bind(view)
 
         fun bind(onboarding: Onboarding){
             with(binding){
-                hsv.setOnTouchListener { _, _ -> true}
+                hsv.setOnTouchListener { _, _-> true}
 
                 tvTitle.text = onboarding.title
 

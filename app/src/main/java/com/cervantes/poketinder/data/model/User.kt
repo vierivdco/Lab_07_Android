@@ -1,4 +1,4 @@
-package com.cervantes.poketinder.data
+package com.cervantes.poketinder.data.model
 
 import java.io.Serializable
 

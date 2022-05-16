@@ -1,4 +1,4 @@
-package com.cervantes.poketinder.activity
+package com.cervantes.poketinder.ui.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
