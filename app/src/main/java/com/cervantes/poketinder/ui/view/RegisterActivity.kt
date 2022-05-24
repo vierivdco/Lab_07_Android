@@ -3,65 +3,37 @@ package com.cervantes.poketinder.ui.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.cervantes.poketinder.data.model.User
+import android.widget.Toast
 import com.cervantes.poketinder.databinding.ActivityRegisterBinding
-import com.cervantes.poketinder.data.SharedPreferenceUtil
-import com.cervantes.poketinder.viewmodel.RegisterViewModel
+import com.cervantes.poketinder.ui.viewmodel.RegisterViewModel
 
-class RegisterActivity: BaseActivity<ActivityRegisterBinding>(ActivityRegisterBinding::inflate) {
+class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterBinding::inflate){
 
-    private lateinit var RegisterViewModel: RegisterViewModel
+    private lateinit var registerViewModel: RegisterViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?){
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        registerViewModel = RegisterViewModel(this)
+        registerViewModel.onCreate()
+        registerViewModel.emptyFieldsError.observe(this) {
+            Toast.makeText(this, "Introduzca su nombre de Usuario por favor", Toast.LENGTH_SHORT).show()
+        }
+        registerViewModel.fieldsAuthenticateError.observe(this) {
+            Toast.makeText(this, "Error las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
+        }
 
-        RegisterViewModel = RegisterViewModel(this)
-
-        RegisterViewModel.onCreate()
-
-        RegisterViewModel.emptyUserError.observe(this){
-            binding.tvUserName.visibility = View.VISIBLE
-            binding.tvUserName.setText("Ingrese el Username")
-        }
-        RegisterViewModel.emptyEmailError.observe(this){
-            binding.tvEmail.visibility = View.VISIBLE
-            binding.tvEmail.setText("Ingrese el Email")
-        }
-        RegisterViewModel.emptyPassword1Error.observe(this){
-            binding.tvPassword.visibility = View.VISIBLE
-            binding.tvPassword.setText("Ingrese el Password")
-        }
-        RegisterViewModel.emptyPassword2Error.observe(this){
-            binding.tvPassword.visibility = View.VISIBLE
-            binding.tvPassword.setText("Ingrese el Password")
-        }
-        RegisterViewModel.noMatchPassword1and2Error.observe(this){
-            binding.tvPassword.visibility = View.VISIBLE
-            binding.tvPassword.setText("El password no coincide")
-        }
-        RegisterViewModel.goalSuccesActivity.observe(this){
-            val intent = Intent(applicationContext, LoginActivity::class.java)
+        registerViewModel.goalSuccesActivity.observe(this){
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
-
-        RegisterViewModel.loadLoginActivity.observe(this){
-            val intent = Intent(applicationContext, LoginActivity::class.java)
-            startActivity(intent)
-        }
-
     }
-
+    fun registerUser(view: View){
+        registerViewModel.validateInputs(binding.edtUserName.text.toString(),
+            binding.edtEmail.text.toString(),binding.edtPassword.text.toString(),binding.edtPassword2.text.toString()
+        )
+    }
     fun loginUser(view: View){
-        RegisterViewModel.sendToLogin()
-    }
-    fun registerUser(view: View) {
-        binding.tvUserName.visibility = View.GONE
-        binding.tvEmail.visibility = View.GONE
-        binding.tvPassword.visibility = View.GONE
-
-        RegisterViewModel.validateInputs(binding.edtUserName.text.toString(),
-            binding.edtEmail.text.toString(),
-            binding.edtPassword.text.toString(),
-            binding.edtPassword2.text.toString())
+        val intent = Intent(applicationContext, LoginActivity::class.java)
+        startActivity(intent)
     }
 }

@@ -12,19 +12,16 @@ import androidx.viewpager2.widget.ViewPager2
 import com.cervantes.poketinder.R
 import com.cervantes.poketinder.databinding.ActivityOnboardingBinding
 import com.cervantes.poketinder.util.Mock
-import com.cervantes.poketinder.data.SharedPreferenceUtil
+import com.cervantes.poketinder.util.SharedPreferenceUtil
 import com.cervantes.poketinder.ui.adapter.OnboardingAdapter
 
 class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(ActivityOnboardingBinding::inflate) {
-
     private val adapter = OnboardingAdapter(Mock().getOnboarding())
-
     private lateinit var sharedPreferenceUtil: SharedPreferenceUtil
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         binding.vpOnboarding.adapter = adapter
-
         sharedPreferenceUtil = SharedPreferenceUtil().also {
             it.setSharedPreference(this)
         }
