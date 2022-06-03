@@ -6,39 +6,52 @@ import androidx.lifecycle.ViewModel
 import com.cervantes.poketinder.data.model.User
 import com.cervantes.poketinder.util.SharedPreferenceUtil
 
-class RegisterViewModel(private val context: Context): ViewModel(){
+class RegisterViewModel(private val context: Context) {
     private lateinit var sharedPreferenceUtil: SharedPreferenceUtil
 
-    val emptyFieldsError = MutableLiveData<Boolean>()
-    val fieldsAuthenticateError = MutableLiveData<Boolean>()
+    val emptyUserError = MutableLiveData<Boolean>()
+    val emptyEmailError = MutableLiveData<Boolean>()
+    val emptyPassword1Error = MutableLiveData<Boolean>()
+    val emptyPassword2Error = MutableLiveData<Boolean>()
+    val noMatchPassword1and2Error = MutableLiveData<Boolean>()
+    val loadLoginActivity = MutableLiveData<Boolean>()
+
     val goalSuccesActivity = MutableLiveData<Boolean>()
 
-    fun onCreate() {
-        sharedPreferenceUtil = SharedPreferenceUtil().also {
+
+    fun onCreate(){
+        sharedPreferenceUtil= SharedPreferenceUtil().also{
             it.setSharedPreference(context)
         }
     }
 
-    fun validateInputs(name: String, email: String, password: String, password2: String){
-        if (name.isNotEmpty() || email.isNotEmpty() || password.isNotEmpty() || password2.isNotEmpty()){
-            if(password == password2){
-                register(name, email, password)
-                goalSuccesActivity.postValue(true)
-            }else{
-                fieldsAuthenticateError.postValue(true)
-            }
-        }
-        else{
-            emptyFieldsError.postValue(true)
+    fun validateInputs(username: String, email:String, password1: String, password2: String){
+
+        //validateInput()
+        if(username.isEmpty()){
+            emptyUserError.postValue(true)
+        }else if(email.isEmpty()){
+            emptyEmailError.postValue(true)
+        }else if(password1.isEmpty()){
+            emptyPassword1Error.postValue(true)
+        }else if(password2.isEmpty()){
+            emptyPassword2Error.postValue(true)
+        }else if(password1 != password2){
+            noMatchPassword1and2Error.postValue(true)
+        }else{
+            //Se usó de contraseña 123
+            val user = User(
+                "1",
+                username,
+                email,
+                password1)
+            sharedPreferenceUtil.saveFacebookUser(user)
+            goalSuccesActivity.postValue(true)
         }
     }
-    fun register(name: String, email: String, password: String){
-        val user = User (
-            "1",
-            name,
-            email,
-            password,
-        )
-        sharedPreferenceUtil.saveFacebookUser (user)
+
+
+    fun sendToLogin(){
+        loadLoginActivity.postValue(true)
     }
 }

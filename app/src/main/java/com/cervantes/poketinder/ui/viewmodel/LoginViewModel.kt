@@ -6,30 +6,33 @@ import androidx.lifecycle.ViewModel
 import com.cervantes.poketinder.data.model.User
 import com.cervantes.poketinder.util.SharedPreferenceUtil
 
-class LoginViewModel(private val context: Context): ViewModel(){
+class LoginViewModel(private val context: Context): ViewModel() {
     private lateinit var sharedPreferenceUtil: SharedPreferenceUtil
 
-    val emptyFieldsError = MutableLiveData<Boolean>()
-    val fieldsAuthenticateError = MutableLiveData<Boolean>()
+    val emptyEmailError = MutableLiveData<Boolean>()
+    val emptyPasswordError = MutableLiveData<Boolean>()
+    val fieldsAuthenricateError = MutableLiveData<Boolean>()
+    val goalSuccesActivity = MutableLiveData<Boolean>()
 
-    val goSuccesActivity = MutableLiveData<Boolean>()
-
-    fun onCreate() {
-        sharedPreferenceUtil = SharedPreferenceUtil().also {
+    fun onCreate(){
+        sharedPreferenceUtil=SharedPreferenceUtil().also{
             it.setSharedPreference(context)
         }
     }
 
-    fun validateInputs(email:String, password: String) {
-        if (email.isEmpty() && password. isEmpty()) {
-            emptyFieldsError.postValue(true)
+    fun validateInputs( email: String, password:String){
+        //validateInput()
+        if(email.isEmpty()){
+            emptyEmailError.postValue(true)
+        }else if(password.isEmpty()){
+            emptyPasswordError.postValue(true)
         }else {
             val user: User? = sharedPreferenceUtil.getUser()
 
-            if (email.equals(user?.email) && password.equals(user?.password)) {
-                goSuccesActivity.postValue(true)
+            if (user?.email.equals(email) && user?.password.equals(password)) {
+                goalSuccesActivity.postValue(true)
             } else {
-                fieldsAuthenticateError.postValue(true)
+                fieldsAuthenricateError.postValue(true)
             }
         }
     }
