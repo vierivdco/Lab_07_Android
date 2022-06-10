@@ -19,6 +19,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
 
         Handler(Looper.getMainLooper()).postDelayed(
             {
+                //Evaluar si mostrar intro o no
                 val isIntroAvailable = sharedPreferenceUtil.getIntroShow()
                 val isUserAvailable = sharedPreferenceUtil.getUser()
                 if(!isIntroAvailable && (isUserAvailable==null)) {

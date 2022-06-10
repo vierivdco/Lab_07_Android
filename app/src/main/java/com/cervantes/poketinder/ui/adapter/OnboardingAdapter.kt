@@ -17,20 +17,19 @@ class OnboardingAdapter(val list: List<Onboarding>) :
         return OnboardingHolder(view)
     }
 
-    override fun onBindViewHolder(holder: OnboardingHolder, position: Int) {
+    override fun onBindViewHolder(holder: OnboardingHolder, position: Int){
         val item = list[position]
         holder.bind(item)
     }
 
     override fun getItemCount(): Int = list.size
 
-    class OnboardingHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class OnboardingHolder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ItemOnboardingBinding.bind(view)
 
-        fun bind(onboarding: Onboarding) {
-            with(binding) {
-
-                hsv.setOnTouchListener { _, _ -> true }
+        fun bind(onboarding: Onboarding){
+            with(binding){
+                hsv.setOnTouchListener { _, _-> true}
 
                 tvTitle.text = onboarding.title
 
