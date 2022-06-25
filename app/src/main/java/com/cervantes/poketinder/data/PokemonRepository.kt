@@ -2,6 +2,7 @@ package com.cervantes.poketinder.data
 
 import com.cervantes.poketinder.data.database.dao.PokemonDao
 import com.cervantes.poketinder.data.database.entities.MyPokemonEntity
+import com.cervantes.poketinder.data.model.PokemonDetailModel
 import com.cervantes.poketinder.data.model.PokemonListModel
 import com.cervantes.poketinder.data.model.PokemonModel
 import com.cervantes.poketinder.data.network.PokemonService
@@ -13,7 +14,6 @@ import javax.inject.Inject
 
 class PokemonRepository @Inject constructor(
     private val pokemonService: PokemonService,
-
     private val pokemonDao: PokemonDao
 ) {
     suspend fun getAllPokemonFromApi(): List<Pokemon>{
@@ -22,9 +22,8 @@ class PokemonRepository @Inject constructor(
         return response.map {it.toDomain()}
     }
 
-    suspend fun getPokemonByIdFromApi(idPokemon:String): PokemonDetail {
-        val response =pokemonService.getPokemonsById(idPokemon)
-        return response.ToDomain()
+    suspend fun getPokemonDetailFromApi(idPokemon:String): PokemonDetailModel {
+        return pokemonService.getPokemonById(idPokemon)
     }
 
     suspend fun getMyPokemonsFromDatabase():List<MyPokemon>{
@@ -34,5 +33,9 @@ class PokemonRepository @Inject constructor(
 
     suspend fun insertMyPokemon(myPokemon:MyPokemonEntity){
         pokemonDao.insert(myPokemon)
+    }
+
+    suspend fun deleteAllMyPokemon(){
+        pokemonDao.deleteTable()
     }
 }

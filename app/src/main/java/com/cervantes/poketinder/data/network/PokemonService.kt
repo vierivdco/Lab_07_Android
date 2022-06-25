@@ -15,7 +15,7 @@ class PokemonService @Inject constructor(private val pokemonApi: PokemonApi) {
         }
     }
 
-    suspend fun getPokemonsById(id:String): PokemonDetailModel {
+    suspend fun getPokemonById(id:String): PokemonDetailModel {
         return withContext(Dispatchers.IO){
             val res: Response<PokemonDetailModel> =pokemonApi.getDetailPokemon(id)
             res.body()!!

@@ -8,6 +8,7 @@ import java.sql.Types
 
 data class PokemonDetailModel(
     @SerializedName("id") val id: Int,
+    @SerializedName("name") val name: String,
     @SerializedName("base_experience") val base_experience: Int,
     @SerializedName("height") val height: Int,
     @SerializedName("weight") val weight: Int,

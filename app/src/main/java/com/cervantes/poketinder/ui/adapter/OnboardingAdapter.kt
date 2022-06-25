@@ -9,7 +9,7 @@ import com.cervantes.poketinder.data.model.Onboarding
 import com.cervantes.poketinder.databinding.ItemOnboardingBinding
 import com.cervantes.poketinder.util.inflate
 
-class OnboardingAdapter(val list: List<Onboarding>) :
+class   OnboardingAdapter(val list: List<Onboarding>) :
     RecyclerView.Adapter<OnboardingAdapter.OnboardingHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OnboardingHolder {
